@@ -1,0 +1,62 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  background-color:#ccffcc;
+}
+h1 {
+  color: white;
+  text-shadow:
+    -1px -1px 0 #009900,
+    1px -1px 0 #009900,
+    -1px 1px 0 #009900,
+    1px 1px 0 #009900;
+  text-align: center;
+}
+
+p {
+  font-family: verdana;
+  font-size: 20px;
+}
+/* Set a style for all buttons */
+button {
+  background-color: #009900;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+  width: 80%;
+  display: block;/*width maxim*/
+  margin: 5px auto;
+  font-size: 20px;
+
+}
+
+/* schimbare culoare pentru buton cand indrept cursorul pe acesta */
+button:hover {
+  opacity: 0.8;
+}
+
+/* centrez logoul */
+.imgcontainer {
+  text-align: center;
+  width: 320px;
+  margin: 20px auto 40px;
+  padding-left: 10px;
+}
+
+.imgcontainer img {
+  max-width: 100%;
+}
+.container {
+  text-align: center;
+  padding: 20px;
+  background-color: white;
+  border-style: dashed;
+  margin: 0 auto;
+  width: 30%;
+}
+
+@media (max-width: 900px) {
+  .container {
+    width: 80%;
+  }
+}

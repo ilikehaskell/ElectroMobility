@@ -1,0 +1,21 @@
+.one {
+  /*height: 100px;*/
+  width: 100px;
+}
+
+div{
+  margin: 10px 10px;
+}
+
+.container {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.batteries {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
