@@ -4,13 +4,13 @@ from rx.subjects import BehaviorSubject
 
 
 def worker(serialHelper):
-    # while serialHelper.ser.in_waiting:
-    #     serialHelper.setMessage(serialHelper.ser.readline())
-    i = 0
-    while i < 100:
-        serialHelper.setMessage(i)
-        i += 1
-    return
+    while serialHelper.ser.in_waiting:
+        serialHelper.setMessage(serialHelper.ser.readline())
+    # i = 0
+    # while i < 100:
+    #     serialHelper.setMessage(i)
+    #     i += 1
+    # return
 
 class SerialHelper:
     ser = serial.Serial('/dev/ttyACM0', 9600)
@@ -31,3 +31,6 @@ class SerialHelper:
 
     def setMessage(self, message):
         self.messages.on_next(message)
+
+    def write(self, message):
+        self.ser.write(message);
