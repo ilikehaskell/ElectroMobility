@@ -11,10 +11,11 @@ export class TestingComponent implements OnInit {
   constructor(private socket: Socket) { }
 
   ngOnInit() {
+	this.socket.on('answer', (data) => console.log(data));
   }
 
   writeSocket(message) {
-    this.socket.write('move', message);
+    this.socket.emit('move', {'data': message});
   }
 
 }

@@ -7,6 +7,6 @@ socketio = SocketIO(app)
 
 @socketio.on('move')
 def test_message(message):
-    print(message)
+    emit('answer', {'data': message})
 
-socketio.run(app)
+socketio.run(app, host='0.0.0.0')
