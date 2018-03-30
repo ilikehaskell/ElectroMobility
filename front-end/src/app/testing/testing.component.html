@@ -48,13 +48,13 @@
 
     <div class="batteries">
 
-      <div><button id="up"><b>⬆</b></button></div>
+      <div><button id="up" (click)="writeSocket('forward')"><b>⬆</b></button></div>
 
-      <div><button id="dwn"><b>⬇</b></button></div>
+      <div><button id="dwn" (click)="writeSocket('backwards')"><b>⬇</b></button></div>
 
-      <div><button id="lef"><b>⬅</b></button></div>
+      <div><button id="lef" (click)="writeSocket('left')"><b>⬅</b></button></div>
 
-      <div><button id="rig"><b>➡</b></button></div>
+      <div><button id="rig" (click)="writeSocket('right')"><b>➡</b></button></div>
 
     </div>
 

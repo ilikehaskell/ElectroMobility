@@ -5,6 +5,7 @@ from SerialHelper import SerialHelper
 from rx.subjects import BehaviorSubject
 from time import sleep
 from DirectionEnum import Direction
+import AppServer
 
 DEFAULT_STEERING_POSITION = 100
 DEFAULT_THROTTLE_POSITION = 90

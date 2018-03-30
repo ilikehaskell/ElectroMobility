@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Socket } from 'ng-socket-io';
 
 @Component({
   selector: 'app-testing',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private socket: Socket) { }
 
   ngOnInit() {
+  }
+
+  writeSocket(message) {
+    this.socket.write('move', message);
   }
 
 }
