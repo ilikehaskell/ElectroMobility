@@ -1,4 +1,12 @@
 #include <Servo.h> 
+#define trigPin1 3
+#define echoPin1 2
+#define trigPin2 4
+#define echoPin2 5
+#define trigPin3 7
+#define echoPin3 8
+
+long duration, distance, RightSensor,BackSensor,FrontSensor,LeftSensor;
 
 Servo throttleServo;
 Servo steeringServo;
@@ -10,8 +18,6 @@ int maxPulseRate = 2000;
 int throttleChangeDelay = 10;
 int steeringChangeDelay = 10;
 
-const int STEERING_CENTER_VALUE = 100;
-
 enum Event {
   STEERING = 1,
   THROTTLE = 2
@@ -19,7 +25,7 @@ enum Event {
 
 void setup() {
   
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.setTimeout(500);
   
   // Attach the the servo to the correct pin and set the pulse range
@@ -28,33 +34,74 @@ void setup() {
   // Write a minimum value (most ESCs require this correct startup)
   throttleServo.write(0);
   steeringServo.write(0);  
+  pinMode(trigPin1, OUTPUT);
+  pinMode(echoPin1, INPUT);
+  pinMode(trigPin2, OUTPUT);
+  pinMode(echoPin2, INPUT);
+  pinMode(trigPin3, OUTPUT);
+  pinMode(echoPin3, INPUT);
 }
 
 void loop() {
   // Wait for some input
-  if (steeringServo.read() == 0)
-    setSteering(STEERING_CENTER_VALUE);
+  if (steeringServo.read() == 0) {
+    steeringServo.write(100);
+  }
+  
   if (Serial.available() > 0) {
 
     Event e = static_cast<Event>(Serial.parseInt());
     
-    Serial.print(e);
     int newValue = Serial.parseInt();
     switch (e) {
       case STEERING:
-        setSteering(normalizeServo(newValue));
-        Serial.print(newValue);
+        setSteering2(normalizeServo(newValue));
       break;
       case THROTTLE:
-        Serial.print(newValue);
-        changeThrottle(normalizeServo(newValue));
+        changeThrottle2(normalizeServo(newValue));
       break;
       default:
       break;
     }
   }
+  
+  SonarSensor(trigPin1, echoPin1);
+  RightSensor = distance;
+  SonarSensor(trigPin2, echoPin2);
+  FrontSensor = distance;
+  SonarSensor(trigPin3, echoPin3);
+  LeftSensor = distance;
+  
+  Serial.print(LeftSensor);
+  Serial.print(" - ");
+  Serial.print(FrontSensor);
+  Serial.print(" - ");
+  Serial.println(RightSensor);
 
+  if (LeftSensor < 30 || FrontSensor < 30 || RightSensor < 30) {
+    changeThrottle2(0);
+  }
 }
+
+void SonarSensor(int trigPin,int echoPin)
+{
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+duration = pulseIn(echoPin, HIGH);
+distance = (duration/2) / 29.1;
+}
+
+void setSteering2(int angle) {
+  steeringServo.write(angle);
+}
+
+void changeThrottle2(int angle) {
+  throttleServo.write(angle);
+}
+
 
 void setSteering(int angle) {
   int currentAngle = readSteeringAngle();
@@ -93,12 +140,14 @@ void changeThrottle(int throttle) {
 
 int readThrottle() {
   int throttle = throttleServo.read();
+            Serial.println(throttle);
 
   return throttle;
 }
 
-int readSteeringAngle() { // steering angle between 60 (left) 100 (forward) and 140 (right)
+int readSteeringAngle() {
   int angle = steeringServo.read();
+          Serial.println(angle);
 
   return angle;
 }
