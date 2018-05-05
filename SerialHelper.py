@@ -13,7 +13,7 @@ def worker(serialHelper):
     # return
 
 class SerialHelper:
-    ser = serial.Serial('/dev/ttyACM0', 9600)
+    ser = serial.Serial('/dev/ttyACM0', 115200)
     def __init__(self):
         self.messages = BehaviorSubject("")
         self.read()
